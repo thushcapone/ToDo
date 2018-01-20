@@ -41,7 +41,7 @@ public class AddTodoFragment extends DialogFragment
         mViewModel.getProductAddedLiveData().observe(this, toDo -> {
             if (toDo != null)
             {
-
+                // Nothing to do.
             }
         });
     }

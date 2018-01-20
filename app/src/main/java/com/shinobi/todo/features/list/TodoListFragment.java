@@ -16,6 +16,8 @@ import com.shinobi.todo.databinding.FragmentTodoListBinding;
 import com.shinobi.todo.entity.Resource;
 import com.shinobi.todo.features.commons.TodoViewModel;
 
+import java.util.Collections;
+
 /**
  * Created by rygelouv on 1/20/18.
  * <p>
@@ -45,9 +47,11 @@ public class TodoListFragment extends Fragment
                         Toast.makeText(getActivity(), "Error occured", Toast.LENGTH_SHORT).show();
                         break;
                     case Resource.LOADING:
+                        //Collections.reverse(listResource.data);
                         mAdapter.setData(listResource.data);
                         break;
                     case Resource.SUCCESS:
+                        //Collections.reverse(listResource.data);
                         mAdapter.setData(listResource.data);
                         break;
                 }
