@@ -11,8 +11,6 @@ import com.shinobi.todo.data.ToDoItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import timber.log.Timber;
-
 /**
  * Created by thiependa on 20/01/2018.
  */
@@ -42,7 +40,6 @@ class ListPresenterImpl extends BasePresenterImpl<ListView, ListModel>
     
     @Override
     public void onGetToDosSuccess(List<ToDoItem> toDos) {
-        Timber.e("on get to do success %d", toDos.size());
         mToDos = toDos;
         mView.stopListLoading();
         mView.setListToDos(toDos);
@@ -61,7 +58,9 @@ class ListPresenterImpl extends BasePresenterImpl<ListView, ListModel>
     @Override
     public void onRequestError(String message) {
         mView.stopListLoading();
-        if (ApiErrorMessages.fromValue(message) == ApiErrorMessages.UNKNOWN) {
+        if (!mCachedToDos.isEmpty()) {
+            //DO nothing
+        }else if (ApiErrorMessages.fromValue(message) == ApiErrorMessages.UNKNOWN) {
             mView.showListError(message);
         } else {
             mView.showListError(ApiErrorMessages.fromValue(message).getResourceId());
@@ -74,9 +73,7 @@ class ListPresenterImpl extends BasePresenterImpl<ListView, ListModel>
         mView.setupRecyclerView();
         if (mToDos.isEmpty()) {
             mView.showListLoading();
-            Timber.e("about to call in presenter");
             mModel.getToDos();
-            Timber.e("about to call in presenter 2");
             if (!mCachedToDos.isEmpty()) {
                 mView.stopListLoading();
                 mView.setListToDos(mCachedToDos);

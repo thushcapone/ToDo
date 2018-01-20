@@ -9,7 +9,6 @@ import com.shinobi.todo.data.ToDo;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import timber.log.Timber;
 
 /**
  * Created by thiependa on 20/01/2018.
@@ -17,13 +16,12 @@ import timber.log.Timber;
 
 class ListModelImpl extends BaseModelImpl<ListModelInteractPresenter> implements ListModel {
     
-    public ListModelImpl(ListModelInteractPresenter mInteractPresenter) {
+    ListModelImpl(ListModelInteractPresenter mInteractPresenter) {
         super(mInteractPresenter);
     }
     
     @Override
     public void getToDos() {
-        Timber.e("about to call 1");
         ListModelClient client = ApiRetrofitGenerator.createService(ListModelClient.class);
     
         Call<ToDo> call = client.getToDos();
@@ -32,8 +30,6 @@ class ListModelImpl extends BaseModelImpl<ListModelInteractPresenter> implements
         if (cachedValue != null) {
             mInteractPresenter.onGetCachedToDosSuccess(cachedValue.getResults());
         }
-        
-        Timber.e("about to call 2");
     
         call.enqueue(new ApiResponseHandler<ToDo>(mInteractPresenter) {
             @Override

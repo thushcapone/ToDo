@@ -51,6 +51,7 @@ class AddModelImpl extends BaseModelImpl<AddModelInteractPresenter> implements A
                 //Nothing to do
             }
         });
+        
         mInteractPresenter.onAddToDoSuccess();
     }
     

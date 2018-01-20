@@ -102,14 +102,7 @@ public class ApiRetryCall<T> extends Job {
         }
         
         public ApiRetryCall build(){
-            //FYI 29/12/2017 : For now I cannot persist the job because after adding the
-            // RECEIVE_BOOT_COMPLETED permission, the device must be restarted or the app re-installed
-            // to refresh the cache permission of the receive boot completed apps, something
-            // I can't afford so for now the job won't be persisted meaning if the user did the
-            // action while not having the connection, when the devices shutdown or crashes I will
-            // lose this queue. I will have this for now and in five months, I will persist it
-//            params = new Params(PRIORITY).requireNetwork().persist();
-            params = new Params(PRIORITY).requireNetwork();
+            params = new Params(PRIORITY).requireNetwork().persist();
             return new ApiRetryCall(params, call, callback);
         }
         
