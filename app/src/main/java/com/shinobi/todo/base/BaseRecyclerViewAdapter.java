@@ -11,10 +11,10 @@ package com.shinobi.todo.base;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.tc.senevideos.utils.EndlessOnScrollListener;
-import com.tc.senevideos.utils.ItemClickListener;
-import com.tc.senevideos.utils.OnLoadMoreListener;
-import com.tc.senevideos.utils.ReflectionUtils;
+import com.shinobi.todo.utils.EndlessOnScrollListener;
+import com.shinobi.todo.utils.ItemClickListener;
+import com.shinobi.todo.utils.OnLoadMoreListener;
+import com.shinobi.todo.utils.ReflectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;

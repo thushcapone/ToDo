@@ -6,18 +6,16 @@
  *  licenses restricting copying, distribution and decompilation.
  */
 
-package com.shinobi.todo.api;
+package com.shinobi.todo.utils;
 
 /**
- * Created by thiependa on 05/06/2017.
+ * Created by Thiependa SEYE AKA Thush Capone on 28/08/2017.
+ * Wizall,
+ * thiependa.seye@wizall.com
  */
 
-public class ApiUrls {
+public interface CallbackUtil {
     
-    public static final String TO_DO = "todos/";
-    
-    
-    public ApiUrls() {
-    }
+    void doAction();
     
 }
