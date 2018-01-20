@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.shinobi.todo"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField 'String', 'URL_API', '"' + URL_API + '"'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation "com.android.support:recyclerview-v7:26.1.0"
+    implementation "com.google.android.gms:play-services-gcm:11.8.0"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    //Used for handling my json files
+    implementation 'com.google.code.gson:gson:2.8.0'
+
+    //Used for handling my network connections
+    implementation('com.squareup.retrofit2:retrofit:2.1.0') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
+    implementation('com.squareup.retrofit2:converter-gson:2.1.0') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.google.code.gson', module: 'gson'
+        exclude group: 'com.squareup.okio', module: 'okio'
+        exclude group: 'com.squareup.retrofit2', module: 'retrofit'
+    }
+
+    //Used to have a nice retrofit logger
+    implementation('com.github.ihsanbal:LoggingInterceptor:2.0.2') {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    //Used to have a better logger
+    implementation 'com.jakewharton.timber:timber:4.5.1'
+
+    //Used for job queue
+    implementation 'com.birbit:android-priority-jobqueue:2.0.1'
+
+}

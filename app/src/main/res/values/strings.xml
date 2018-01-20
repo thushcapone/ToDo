@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">To Do</string>
+
+    <string name="not_available">Pas encore disponible</string>
+    <string name="error_no_connection">Problème de connexion, verifier votre connexion internet puis réessayer.</string>
+    <string name="error_api">Erreur serveur</string>
+    <string name="error_end_of_page">Dernière page atteinte</string>
+    <string name="error_not_found">Contenu introuvable</string>
+
+</resources>
