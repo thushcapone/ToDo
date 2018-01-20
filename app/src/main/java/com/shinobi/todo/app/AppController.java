@@ -52,6 +52,7 @@ public class AppController extends Application {
         initCache();
         initGson();
         initJobManager();
+        setCrashLogger();
     }
     
     public PreferencesHelper getPreferences() {
@@ -82,6 +83,10 @@ public class AppController extends Application {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
         mGson = gsonBuilder.create();
+    }
+    
+    private void setCrashLogger() {
+        Timber.plant(new Timber.DebugTree());
     }
     
     private void initJobManager() {

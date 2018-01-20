@@ -30,18 +30,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.tc.senevideos.R;
-import com.tc.senevideos.app.Tags;
-import com.tc.senevideos.utils.KeyboardUtils;
-import com.tc.senevideos.utils.ReflectionUtils;
-import com.tc.senevideos.widgets.message_dialog.MessageCallback;
-import com.tc.senevideos.widgets.message_dialog.MessageDialog;
-import com.tc.senevideos.widgets.message_dialog.error.ErrorMessageDialog;
-import com.tc.senevideos.widgets.progress_dialog.ProgressDialog;
-
-import java.util.List;
+import com.shinobi.todo.app.Tags;
+import com.shinobi.todo.utils.KeyboardUtils;
+import com.shinobi.todo.utils.ReflectionUtils;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -52,7 +44,7 @@ import timber.log.Timber;
  */
 public abstract class BaseDialog<P extends BasePresenter, C extends BaseCallback>
         extends DialogFragment
-        implements BaseView, MessageCallback {
+        implements BaseView {
     
     private static final int LOADER_ID = 102;
     protected String mTag;
@@ -60,11 +52,9 @@ public abstract class BaseDialog<P extends BasePresenter, C extends BaseCallback
     protected C mCallback;
     protected Bundle mSavedInstanceState;
     protected View mCustomView;
-    protected ErrorMessageDialog mErrorMessageDialog;
     protected Button mPositiveButton;
     protected Button mNegativeButton;
     private boolean isNewDialog;
-    private ProgressDialog mLoadingDialog;
     
     @Nullable
     @Override
@@ -126,7 +116,7 @@ public abstract class BaseDialog<P extends BasePresenter, C extends BaseCallback
         Class classOfC = ReflectionUtils.getTypeArguments(BaseDialog.class, getClass()).get(1);
         for (Fragment fragment : ((BaseActivity) context).getSupportFragmentManager()
                                                          .getFragments()) {
-            if (classOfC.isInstance(fragment) && !MessageDialog.class.isAssignableFrom(fragment.getClass())) {
+            if (classOfC.isInstance(fragment)) {
                 mCallback = mCallback == null ? (C) fragment : mCallback;
                 return;
             }
@@ -171,45 +161,13 @@ public abstract class BaseDialog<P extends BasePresenter, C extends BaseCallback
     }
     
     @Override
-    public void showLoading() {
-        mLoadingDialog = ProgressDialog.newInstance(getResources().getString(R.string.loading));
-        mLoadingDialog.show(getChildFragmentManager(), Tags.DIALOG_LOADING);
-    }
-    
-    @Override
-    public void stopLoading() {
-        if (mLoadingDialog != null) {
-            mLoadingDialog.dismiss();
-        }
-    }
-    
-    @Override
-    public void showError(Object msg) {
-        String message = msg instanceof Integer ? getResources().getString((Integer) msg) :
-                (String) msg;
-        mErrorMessageDialog = (ErrorMessageDialog) ErrorMessageDialog
-                .builder()
-                .withMessage(message)
-                .build();
-        mErrorMessageDialog.show(getChildFragmentManager(), Tags.DIALOG_ERROR);
-    }
-    
-    @Override
     public void retrieveState() {
-        mLoadingDialog =
-                (ProgressDialog) getChildFragmentManager().findFragmentByTag(Tags.DIALOG_LOADING);
-        mErrorMessageDialog =
-                (ErrorMessageDialog) getChildFragmentManager().findFragmentByTag(Tags.DIALOG_ERROR);
+        //Nothing to do yet
     }
     
     @Override
     public void saveState() {
         //Nothing to do yet
-    }
-    
-    @Override
-    public void noConnection() {
-        Toast.makeText(this.getContext(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
     }
     
     @Override
@@ -220,30 +178,6 @@ public abstract class BaseDialog<P extends BasePresenter, C extends BaseCallback
     @Override
     public void close() {
         this.dismiss();
-    }
-    
-    @Override
-    public void onMessageOk(String tag) {
-        List<Fragment> fragmentChilds = getChildFragmentManager().getFragments();
-        if (fragmentChilds != null) {
-            for (Fragment f : fragmentChilds) {
-                if (f instanceof BaseDialog) {
-                    ((BaseDialog) f).onMessageOk(tag);
-                }
-            }
-        }
-    }
-    
-    @Override
-    public void onMessageCancel(String tag) {
-        List<Fragment> fragmentChilds = getChildFragmentManager().getFragments();
-        if (fragmentChilds != null) {
-            for (Fragment f : fragmentChilds) {
-                if (f instanceof BaseDialog) {
-                    ((BaseDialog) f).onMessageCancel(tag);
-                }
-            }
-        }
     }
     
     /**

@@ -14,7 +14,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.tc.senevideos.R;
+import com.shinobi.todo.R;
+
 
 /**
  * Created by Thiependa SEYE AKA Thush Capone on 15/04/2017.

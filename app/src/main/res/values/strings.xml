@@ -6,5 +6,10 @@
     <string name="error_api">Erreur serveur</string>
     <string name="error_end_of_page">Dernière page atteinte</string>
     <string name="error_not_found">Contenu introuvable</string>
+    <string name="add_validate">Ajouter</string>
+    <string name="loading">Chargement&#8230;</string>
+    <string name="no_to_do">Aucune note</string>
+    <string name="no_content_found">Aucune vidéo trouvées</string>
+    <string name="retry">Réessayer</string>
 
 </resources>

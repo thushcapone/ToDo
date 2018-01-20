@@ -22,7 +22,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.tc.senevideos.app.AppController;
+import com.shinobi.todo.app.AppController;
+
 
 /**
  * Contains all the keyboard helpers

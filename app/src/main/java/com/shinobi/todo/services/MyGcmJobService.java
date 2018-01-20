@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
 
 import com.birbit.android.jobqueue.JobManager;
 import com.birbit.android.jobqueue.scheduling.GcmJobSchedulerService;
-import com.tc.senevideos.app.AppController;
+import com.shinobi.todo.app.AppController;
 
 /**
  * Created by thiependa on 28/12/2017.

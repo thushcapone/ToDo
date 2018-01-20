@@ -12,7 +12,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.reflect.TypeToken;
-import com.shinobi.todo.data.ToDo;
+import com.shinobi.todo.data.ToDoItem;
 import com.shinobi.todo.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -47,24 +47,22 @@ public class PreferencesHelper {
         mEditorSession = mPrefSession.edit();
     }
     
-    public List<ToDo> getToDos() {
+    public List<ToDoItem> getToDos() {
         String toDos = mPrefSession.getString(KEY_TO_DO, "");
-        List<ToDo> list = StringUtils.stringToList(toDos, new
-                TypeToken<ArrayList<ToDo>>() {
-        }.getType());
+        List<ToDoItem> list = StringUtils.stringToList(toDos, new TypeToken<ArrayList<ToDoItem>>() {}.getType());
         if (list == null) {
             list = new ArrayList<>();
         }
         return list;
     }
     
-    public void addToDo(ToDo toDo) {
-        List<ToDo> list = getToDos();
+    public void addToDo(ToDoItem toDo) {
+        List<ToDoItem> list = getToDos();
         list.add(toDo);
         saveToDos(list);
     }
     
-    private void saveToDos(List<ToDo> videos) {
+    private void saveToDos(List<ToDoItem> videos) {
         mEditorSession.putString(KEY_TO_DO, StringUtils.listToString(videos));
         mEditorSession.apply();
     }

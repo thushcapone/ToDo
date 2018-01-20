@@ -14,7 +14,6 @@ package com.shinobi.todo.base;
  * thiependa.seye@gmail.com
  */
 
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,28 +23,20 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.tc.senevideos.R;
-import com.tc.senevideos.app.AppController;
-import com.tc.senevideos.app.Tags;
-import com.tc.senevideos.utils.KeyboardUtils;
-import com.tc.senevideos.utils.LifecycleCallback;
-import com.tc.senevideos.widgets.message_dialog.MessageCallback;
-import com.tc.senevideos.widgets.message_dialog.error.ErrorMessageDialog;
-import com.tc.senevideos.widgets.progress_dialog.ProgressDialog;
+import com.shinobi.todo.app.Tags;
+import com.shinobi.todo.utils.KeyboardUtils;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Mother Activity that all the activities using the MVP inherit from.
  * Implements the functions that are common to all the activities.
  */
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity
-        implements BaseView, MessageCallback, LifecycleCallback.ForegroundListener {
+        implements BaseView {
     
     private static final int LOADER_ID = 101;
     
@@ -55,9 +46,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     
     protected P mPresenter;
     protected Bundle mSavedInstanceState;
-    protected ErrorMessageDialog mErrorMessageDialog;
     private boolean isNewActivity;
-    private ProgressDialog mLoadingDialog;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,9 +91,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
                 //BaseActivity.this.mPresenter = null;
             }
         });
-        
-        //Add foreground listener
-        AppController.getInstance().getLifecycleCallback().addListener(this);
     }
     
     @Override
@@ -117,11 +103,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
         
         return super.onOptionsItemSelected(item);
-    }
-    
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
     
     @Override
@@ -143,13 +124,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
     
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //Remove foreground listener
-        AppController.getInstance().getLifecycleCallback().removeListener(this);
-    }
-    
-    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putBundle(Tags.BUNDLE_STATE, this.mSavedInstanceState);
         // Always call the superclass so it can save the mCustomView hierarchy state
@@ -157,46 +131,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
     
     @Override
-    public void showLoading() {
-        mLoadingDialog = ProgressDialog.newInstance(getResources().getString(R.string.loading));
-        mLoadingDialog.show(getSupportFragmentManager(), Tags.DIALOG_LOADING);
-    }
-    
-    @Override
-    public void stopLoading() {
-        if (mLoadingDialog != null) {
-            mLoadingDialog.dismiss();
-        }
-    }
-    
-    @Override
-    public void showError(Object msg) {
-        String message = msg instanceof Integer ? getResources().getString((Integer) msg) :
-                (String) msg;
-        mErrorMessageDialog = (ErrorMessageDialog) ErrorMessageDialog
-                .builder()
-                .withMessage(message)
-                .build();
-        mErrorMessageDialog.show(getSupportFragmentManager(), Tags.DIALOG_ERROR);
-    }
-    
-    @Override
     public void retrieveState() {
-        mLoadingDialog =
-                (ProgressDialog) getSupportFragmentManager().findFragmentByTag(Tags.DIALOG_LOADING);
-        mErrorMessageDialog =
-                (ErrorMessageDialog) getSupportFragmentManager().findFragmentByTag(Tags.DIALOG_ERROR);
-        
+        //Nothing to do yet
     }
     
     @Override
     public void saveState() {
         //Nothing to do yet
-    }
-    
-    @Override
-    public void noConnection() {
-        Toast.makeText(this, R.string.error_no_connection, Toast.LENGTH_LONG).show();
     }
     
     @Override
@@ -207,16 +148,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     public void close() {
         finish();
-    }
-    
-    @Override
-    public void onMessageOk(String tag) {
-        //Nothing to do yet
-    }
-    
-    @Override
-    public void onMessageCancel(String tag) {
-        //Nothing to do yet
     }
     
     @Override
@@ -258,16 +189,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             }
         }
         return handled;
-    }
-    
-    @Override
-    public void onBecameBackground() {
-        //Nothing to do
-    }
-    
-    @Override
-    public void onBecameForeground(String activity) {
-        //Nothing to do yet
     }
     
     /**

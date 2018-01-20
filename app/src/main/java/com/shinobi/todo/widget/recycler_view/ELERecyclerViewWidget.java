@@ -10,25 +10,20 @@ package com.shinobi.todo.widget.recycler_view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.tc.senevideos.R;
-import com.tc.senevideos.base.BaseWidget;
-import com.tc.senevideos.utils.ClickGuard;
-import com.tc.senevideos.utils.ViewUtils;
+import com.shinobi.todo.R;
+import com.shinobi.todo.base.BaseWidget;
+import com.shinobi.todo.utils.ClickGuard;
+import com.shinobi.todo.utils.ViewUtils;
 
 import java.util.concurrent.Callable;
 
@@ -63,11 +58,6 @@ public class ELERecyclerViewWidget extends BaseWidget {
     @BindView(R.id.layout_error)
     protected View layoutError;
     
-    protected View headerView;
-    protected HeaderDecoration headerDecoration;
-    protected GestureDetectorCompat detector;
-    private RecyclerViewOnGestureListener headerListener;
-    
     private Boolean mIsRefreshable;
     
     public ELERecyclerViewWidget(Context context) {
@@ -99,37 +89,6 @@ public class ELERecyclerViewWidget extends BaseWidget {
     @Override
     public void setupView() {
         super.setupView();
-        
-        if(headerView == null) {
-            headerView = LayoutInflater
-                    .from(this.getContext())
-                    .inflate(R.layout.partial_layout_info_header_view, null, false);
-    
-            headerDecoration = HeaderDecoration.with(recyclerView)
-                                               .setView(headerView)
-                                               .parallax(0.2f)
-                                               .dropShadowDp(4)
-                                               .build();
-    
-            headerListener = new RecyclerViewOnGestureListener(recyclerView, headerView);
-    
-            detector = new GestureDetectorCompat(this.getContext(), headerListener);
-    
-            recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-                @Override
-                public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                    detector.onTouchEvent(e);
-                    return false;
-                }
-        
-                @Override
-                public void onTouchEvent(RecyclerView rv, MotionEvent e) {}
-        
-                @Override
-                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
-            });
-            
-        }
         
         recyclerView.setEmptyView(layoutEmpty);
         recyclerView.setLoadingView(loadingView);
@@ -164,22 +123,6 @@ public class ELERecyclerViewWidget extends BaseWidget {
         textEmptyDesc.setText(text);
     }
     
-    public void showHeader(Drawable drawable, String title, String description){
-        ImageView imgInfo = headerView.findViewById(R.id.img_info);
-        TextView textInfoTitle = headerView.findViewById(R.id.text_info_title);
-        TextView textInfoDescription = headerView.findViewById(R.id.text_info_description);
-    
-        imgInfo.setImageDrawable(drawable);
-        textInfoTitle.setText(title);
-        textInfoDescription.setText(description);
-        
-        recyclerView.addItemDecoration(headerDecoration);
-    }
-    
-    public void hideHeader(){
-        recyclerView.removeItemDecoration(headerDecoration);
-    }
-    
     public void setRefreshListener(Callable func) {
         swipeRefresh.setOnRefreshListener(() -> {
             try {
@@ -210,18 +153,6 @@ public class ELERecyclerViewWidget extends BaseWidget {
             }
         });
         ClickGuard.guard(layoutError.findViewById(R.id.button_error));
-    }
-    
-    public void setHideInfoHeaderListener(Callable func) {
-        headerListener.setViewId(R.id.img_info_close_button);
-        headerListener.setFunc(() -> {
-            try {
-                func.call();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        });
     }
     
     public void showLoading() {

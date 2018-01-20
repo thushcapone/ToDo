@@ -16,10 +16,9 @@ package com.shinobi.todo.base;
 
 import android.support.annotation.NonNull;
 
-import com.tc.senevideos.api.ApiErrorMessages;
-import com.tc.senevideos.utils.NoOpCheckNullProxy;
-import com.tc.senevideos.utils.NoOpViewCheckNullProxy;
-import com.tc.senevideos.utils.ReflectionUtils;
+import com.shinobi.todo.utils.NoOpCheckNullProxy;
+import com.shinobi.todo.utils.NoOpViewCheckNullProxy;
+import com.shinobi.todo.utils.ReflectionUtils;
 
 import java.lang.reflect.Proxy;
 
@@ -51,12 +50,7 @@ public abstract class BasePresenterImpl<V extends BaseView, M extends BaseModel>
     
     @Override
     public void onRequestError(String message) {
-        mView.stopLoading();
-        if (ApiErrorMessages.fromValue(message) == ApiErrorMessages.UNKNOWN) {
-            mView.showError(message);
-        } else if(ApiErrorMessages.fromValue(message) != ApiErrorMessages.NO_NETWORK){
-            mView.showError(ApiErrorMessages.fromValue(message).getResourceId());
-        }
+        //Nothing to do yet
     }
     
     @SuppressWarnings("unchecked")

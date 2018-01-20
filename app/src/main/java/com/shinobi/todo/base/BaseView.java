@@ -22,20 +22,6 @@ package com.shinobi.todo.base;
 public interface BaseView {
     
     /**
-     * Shows a progress dialog
-     * E.g. {@link com.wizall.wizallclient.widgets.progressdialog.ProgressDialog#show
-     * (FragmentManager,
-     * String)}
-     */
-    void showLoading();
-    
-    /**
-     * Dismisses the progress dialog previously shown
-     * E.g. {@link com.wizall.wizallclient.widgets.progressdialog.ProgressDialog#dismiss()}
-     */
-    void stopLoading();
-    
-    /**
      * Setup the view
      * It is where you can bind the butterknife to the view, sets the listeners, passes infos to the
      * presenter, set the visibility of the view, ...
@@ -54,12 +40,6 @@ public interface BaseView {
     void retrieveState();
     
     /**
-     * Shows a dialog with the message stating there is a problem with the connection
-     * E.g. Using {@link com.wizall.wizallclient.widgets.messagedialog.MessageDialog}
-     */
-    void noConnection();
-    
-    /**
      * Hides the keyboard
      */
     void hideKeyboard();
@@ -68,7 +48,5 @@ public interface BaseView {
      * Closes the current view
      */
     void close();
-    
-    void showError(Object msg);
     
 }

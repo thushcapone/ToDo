@@ -24,16 +24,9 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.tc.senevideos.R;
-import com.tc.senevideos.app.Tags;
-import com.tc.senevideos.utils.KeyboardUtils;
-import com.tc.senevideos.widgets.message_dialog.MessageCallback;
-import com.tc.senevideos.widgets.message_dialog.error.ErrorMessageDialog;
-import com.tc.senevideos.widgets.progress_dialog.ProgressDialog;
-
-import java.util.List;
+import com.shinobi.todo.app.Tags;
+import com.shinobi.todo.utils.KeyboardUtils;
 
 import butterknife.ButterKnife;
 
@@ -42,7 +35,7 @@ import butterknife.ButterKnife;
  * Implements the functions that are common to all the fragments.
  */
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
-        implements BaseView, MessageCallback {
+        implements BaseView {
     
     private static final int LOADER_ID = 103;
     
@@ -53,9 +46,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
     protected P mPresenter;
     protected Bundle mSavedInstanceState;
     protected View mCustomView;
-    protected ErrorMessageDialog mErrorMessageDialog;
     private boolean isNewFragment;
-    private ProgressDialog mLoadingDialog;
     
     @Nullable
     @Override
@@ -118,48 +109,15 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
     }
     
     @Override
-    public void showLoading() {
-        mLoadingDialog = ProgressDialog.newInstance(getResources().getString(R.string.loading));
-        mLoadingDialog.show(getChildFragmentManager(), Tags.DIALOG_LOADING);
-    }
-    
-    @Override
-    public void stopLoading() {
-        if (mLoadingDialog != null) {
-            mLoadingDialog.dismiss();
-        }
-    }
-    
-    @Override
-    public void showError(Object msg) {
-        String message = msg instanceof Integer ? getResources().getString((Integer) msg) :
-                (String) msg;
-        mErrorMessageDialog = (ErrorMessageDialog) ErrorMessageDialog
-                .builder()
-                .withMessage(message)
-                .build();
-        mErrorMessageDialog.show(getChildFragmentManager(), Tags.DIALOG_ERROR);
-    }
-    
-    @Override
     public void retrieveState() {
         if (isAdded()) {
-            mLoadingDialog =
-                    (ProgressDialog) getChildFragmentManager().findFragmentByTag(Tags.DIALOG_LOADING);
-            
-            mErrorMessageDialog =
-                    (ErrorMessageDialog) getChildFragmentManager().findFragmentByTag(Tags.DIALOG_ERROR);
+            //Nothing to do
         }
     }
     
     @Override
     public void saveState() {
         //Nothing to do yet
-    }
-    
-    @Override
-    public void noConnection() {
-        Toast.makeText(this.getContext(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
     }
     
     @Override
@@ -170,30 +128,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
     @Override
     public void close() {
         this.getActivity().finish();
-    }
-    
-    @Override
-    public void onMessageOk(String tag) {
-        List<Fragment> fragmentChilds = getChildFragmentManager().getFragments();
-        if (fragmentChilds != null) {
-            for (Fragment f : fragmentChilds) {
-                if (f instanceof BaseFragment) {
-                    ((BaseFragment) f).onMessageOk(tag);
-                }
-            }
-        }
-    }
-    
-    @Override
-    public void onMessageCancel(String tag) {
-        List<Fragment> fragmentChilds = getChildFragmentManager().getFragments();
-        if (fragmentChilds != null) {
-            for (Fragment f : fragmentChilds) {
-                if (f instanceof BaseFragment) {
-                    ((BaseFragment) f).onMessageCancel(tag);
-                }
-            }
-        }
     }
     
     /**

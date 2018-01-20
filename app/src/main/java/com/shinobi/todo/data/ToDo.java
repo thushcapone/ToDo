@@ -1,6 +1,6 @@
 package com.shinobi.todo.data;
 
-import com.shinobi.todo.app.AppController;
+import java.util.List;
 
 /**
  * Created by thiependa on 20/01/2018.
@@ -8,31 +8,34 @@ import com.shinobi.todo.app.AppController;
 
 public class ToDo {
     
+    
     /**
-     * id : 1
-     * uuid : pfaoiehrfdslfnc
-     * text : Faire les courses
+     * count : 2
+     * next : null
+     * previous : null
+     * results : [{"id":1,"uuid":"pfaoiehrfdslfnc","text":"Faire les courses"},{"id":2,
+     * "uuid":"fepoirhgprenc","text":"Faire le con"}]
      */
     
-    private int id;
-    private String uuid;
-    private String text;
+    private int count;
+    private Object next;
+    private Object previous;
+    private List<ToDoItem> results;
     
-    public int getId() { return id;}
+    public int getCount() { return count;}
     
-    public void setId(int id) { this.id = id;}
+    public void setCount(int count) { this.count = count;}
     
-    public String getUuid() { return uuid;}
+    public Object getNext() { return next;}
     
-    public void setUuid(String uuid) { this.uuid = uuid;}
+    public void setNext(Object next) { this.next = next;}
     
-    public String getText() { return text;}
+    public Object getPrevious() { return previous;}
     
-    public void setText(String text) { this.text = text;}
+    public void setPrevious(Object previous) { this.previous = previous;}
     
-    @Override
-    public String toString() {
-        return AppController.getInstance().getGson().toJson(this);
-    }
+    public List<ToDoItem> getResults() { return results;}
+    
+    public void setResults(List<ToDoItem> results) { this.results = results;}
     
 }

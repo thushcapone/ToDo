@@ -47,6 +47,7 @@ public abstract class ApiResponseHandler<T> implements Callback<T> {
     
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
+        Timber.e("received response %s", response.isSuccessful());
         if (response.isSuccessful()) {
             onSuccess(response.body());
         } else {
