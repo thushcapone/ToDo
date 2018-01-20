@@ -1,0 +1,35 @@
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context="com.shinobi.todo.features.add.AddTodoFragment">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/todo_name"
+            android:layout_marginTop="16dp"
+            android:hint="Enter todo text"
+            android:minWidth="200dp"
+            />
+
+        <com.github.rygelouv.androidloadingbuttonlib.LoadingButton
+            android:id="@+id/button_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:text="@string/add"
+            custom:textColor="@android:color/white"
+            custom:background="@drawable/button_accent_full"
+            custom:textSize="12sp"
+            android:layout_marginTop="16dp"
+            custom:progressColor="@android:color/white"
+            />
+
+    </LinearLayout>
+
+</layout>

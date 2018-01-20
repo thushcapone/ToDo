@@ -6,5 +6,10 @@
     <string name="error_api">Erreur serveur</string>
     <string name="error_end_of_page">Dernière page atteinte</string>
     <string name="error_not_found">Contenu introuvable</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add">ADD</string>
 
 </resources>

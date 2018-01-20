@@ -11,8 +11,6 @@ package com.shinobi.todo.api;
 import com.ihsanbal.logging.Level;
 import com.ihsanbal.logging.LoggingInterceptor;
 import com.shinobi.todo.BuildConfig;
-import com.shinobi.todo.app.AppController;
-import com.shinobi.todo.data.ApiError;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,8 +18,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.internal.platform.Platform;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import timber.log.Timber;
 
 /**
  * Created by thiependa on 05/06/2017.
@@ -32,8 +30,8 @@ public class ApiRetrofitGenerator {
     private static final String API_BASE_URL = BuildConfig.URL_API;
     
     private static Retrofit.Builder sBuilder = new Retrofit.Builder().baseUrl(API_BASE_URL)
-                                                                     .addConverterFactory
-                                                                             (GsonConverterFactory.create(AppController.getInstance().getGson()));
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
     
     public ApiRetrofitGenerator() {
     }
@@ -72,7 +70,7 @@ public class ApiRetrofitGenerator {
         }
     }
     
-    public static class ErrorUtils {
+    /*public static class ErrorUtils {
         
         private ErrorUtils() {
         }
@@ -95,6 +93,6 @@ public class ApiRetrofitGenerator {
             return error;
         }
         
-    }
+    }*/
     
 }

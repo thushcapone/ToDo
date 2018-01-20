@@ -10,14 +10,11 @@ package com.shinobi.todo.api;
 
 /**
  * Created by thiependa on 05/06/2017.
+ * Todo
+ * Open Source
  */
 
 public class ApiUrls {
     
     public static final String TO_DOS = "todos/";
-    
-    
-    public ApiUrls() {
-    }
-    
 }
